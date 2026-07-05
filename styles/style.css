@@ -3,16 +3,18 @@ body {
 }
 .toolbar {
   padding-left: 10px;
-  margin: 0;
   background-color: lightgrey;
+  display: flex;
+  align-items: start;
 }
-.toolbar-submenu {
-  padding: 5px 5px;
+.toolbar-button {
+  padding: 5px 10px;
   border: 0;
   font-size: 18px;
   background-color: inherit;
+  color: black;
 }
-.toolbar-submenu:hover {
+.toolbar-button:hover, .active {
   background-color: darkblue;
   color: white;
   cursor: pointer;
