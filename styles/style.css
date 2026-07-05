@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+}
+.toolbar {
+  padding-left: 10px;
+  margin: 0;
+  background-color: lightgrey;
+}
+.toolbar-submenu {
+  padding: 5px 5px;
+  border: 0;
+  font-size: 18px;
+  background-color: inherit;
+}
+.toolbar-submenu:hover {
+  background-color: darkblue;
+  color: white;
+  cursor: pointer;
+}
