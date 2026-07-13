@@ -1,9 +1,5 @@
-"use strict";
+import * as Sim from "./modules/simulator.js";
 
-{
-    const editButton = document.querySelector("#edit-button");
+let circuit = {};
 
-    editButton.addEventListener("click", function () {
-        this.classList.toggle("active");
-    });
-}
+console.log(Sim.getEquivalentResistance(circuit));

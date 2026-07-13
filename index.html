@@ -4,15 +4,7 @@
 <html>
     <head>
         <meta charset="UTF-8"/>
-        <script src="wasm_exec.js"></script>
-        <script>
-            const go = new Go();
-
-            WebAssembly.instantiateStreaming(fetch("profcircuit.wasm"), go.importObject).then((result) => {
-                go.run(result.instance);
-            });
-        </script>
-        <script src="index.js" defer></script>
+        <script type="module" src="index.js" defer></script>
         <link href="styles/style.css" rel="stylesheet" />
         <title>Profcircuit - Circuit design and reverse engineering</title>
     </head>
