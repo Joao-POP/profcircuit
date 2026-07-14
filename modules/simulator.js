@@ -3,10 +3,15 @@ export { getEquivalentResistance, Node };
 function Node(parts, connections) {
     this.parts = parts;
     this.connections = connections;
+    this.symMap = new Map();
 }
 
+// Mark and sweep, kinda.
 function getEquivalentResistance(circuitNode) {
+    console.debug("Entering node", circuitNode.tag, circuitNode);
+
     if (circuitNode.parts === null) {
+        console.debug("Circuit termination");
         return 0;
     }
 
@@ -14,24 +19,41 @@ function getEquivalentResistance(circuitNode) {
         throw "Unequal number of connections and parts";
     }
 
-    let branchResistances = [];
+    // Keep running while termination is not reached.
+    //while (circuitNode.parts.length > 1 && circuitNode.connections.length > 1 && circuitNode.connections[0].parts != null) {
+        markNodes(circuitNode, null);
+        sweepNodes(circuitNode);
+    //}
 
-    // Make every out node into an equivalent resistance.
-    for (let i = 0; i < circuitNode.parts.length; i++) {
-        let branchEquivalentResistance = 0;
+    // Last resistor standing is the equivalent one.
+    return circuitNode.parts[0][0];
+}
 
-        branchEquivalentResistance += circuitNode.parts[i] +
-            getEquivalentResistance(circuitNode.connections[i]);
-
-        branchResistances.push(branchEquivalentResistance);
+// Traces where current came from.
+function markNodes(node, prevSym) {
+    if (node.connections.length === 0) {
+        return;
     }
 
-    let equivalentResistance = getParallelResistance(branchResistances);
+    let sym = node.connections.length > 1 ? node : prevSym;
 
-    return equivalentResistance;
+    for (let c of node.connections) {
+        c.symMap.set(sym, (c.symMap.get(sym) ?? 0) + 1);
+        markNodes(c, sym);
+    }
+}
+
+// Merges nodes as to join their split currents back.
+function sweepNodes(terminatorNode) {
+
 }
 
 function getParallelResistance(resistors) {
-    console.log(resistors);
-    return Math.sumPrecise(resistors.map((r) => r ** -1)) ** -1;
+    console.debug("Parallel of:", resistors);
+
+    let result = Math.sumPrecise(resistors.map((r) => r ** -1)) ** -1;
+
+    console.debug("Got", result);
+
+    return result;
 }
