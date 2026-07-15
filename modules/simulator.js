@@ -1,9 +1,11 @@
 export { getEquivalentResistance, Node };
 
-function Node(parts, connections) {
-    this.parts = parts;
-    this.connections = connections;
-    this.symMap = new Map();
+class Node {
+    constructor(parts, connections) {
+        this.parts = parts;
+        this.connections = connections;
+        this.symMap = new Map();
+    }
 }
 
 // Mark and sweep, kinda.
@@ -21,7 +23,7 @@ function getEquivalentResistance(circuitNode) {
 
     // Keep running while termination is not reached.
     //while (circuitNode.parts.length > 1 && circuitNode.connections.length > 1 && circuitNode.connections[0].parts != null) {
-        markNodes(circuitNode, null);
+        markNodes(circuitNode);
         sweepNodes(circuitNode);
     //}
 
@@ -30,16 +32,17 @@ function getEquivalentResistance(circuitNode) {
 }
 
 // Traces where current came from.
-function markNodes(node, prevSym) {
-    if (node.connections.length === 0) {
-        return;
-    }
-
-    let sym = node.connections.length > 1 ? node : prevSym;
-
+function markNodes(node) {
     for (let c of node.connections) {
-        c.symMap.set(sym, (c.symMap.get(sym) ?? 0) + 1);
-        markNodes(c, sym);
+        if (node.connections.length > 1) {
+            c.symMap.set(node, (c.symMap.get(node) ?? 0) + 1);
+        }
+
+        node.symMap.entries().forEach(sym => {
+            c.symMap.set(sym, (c.symMap.get(sym) ?? 0) + 1);
+        });
+
+        markNodes(c);
     }
 }
 

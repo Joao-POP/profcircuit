@@ -28,6 +28,7 @@ let B = new Sim.Node([[27],], [D]);
 let circuit = new Sim.Node([[10], [22]], [B, C]);
 */
 
+/*
 let H = new Sim.Node(null, []);
 let F = new Sim.Node([[40],], [H]);
 let E = new Sim.Node([[40],], [H])
@@ -41,6 +42,26 @@ D.tag = "D";
 F.tag = "F";
 C.tag = "C";
 B.tag = "B";
+circuit.tag = "A";
+*/
+
+let r = 40;
+let K = new Sim.Node(null, []);
+let I = new Sim.Node([[r],],      [K]);
+let G = new Sim.Node([[r],],      [I]);
+let H = new Sim.Node([[r],],      [I]);
+let E = new Sim.Node([[r],],      [K]);
+let F = new Sim.Node([[r], [r],], [H, G]);
+let B = new Sim.Node([[r], [r],], [F, E]);
+let circuit = new Sim.Node([[r], [r],], [B, K]);
+
+H.tag = "H";
+E.tag = "E";
+F.tag = "F";
+B.tag = "B";
+G.tag = "G";
+I.tag = "I";
+K.tag = "K";
 circuit.tag = "A";
 
 console.log("Equivalent resistance:", Sim.getEquivalentResistance(circuit));
