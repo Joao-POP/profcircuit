@@ -1,21 +1,34 @@
 body {
   margin: 0;
 }
-.toolbar {
-  padding-left: 10px;
-  background-color: lightgrey;
+.menubar ol {
+  padding: 0px;
+  list-style-type: none;
+  background-color: black;
   display: flex;
   align-items: start;
+  margin: 0px;
 }
-.toolbar-button {
-  padding: 5px 10px;
+#add-dropdown {
+  display: none;
+  padding: 50px;
+  background-color: yellow;
+}
+/*#add-dropdown, .active {
+  display: block;
+}*/
+.menu-item {
+  padding: 5px;
   border: 0;
-  font-size: 18px;
+  font: 1.2em sans-serif;
   background-color: inherit;
-  color: black;
-}
-.toolbar-button:hover, .active {
-  background-color: darkblue;
   color: white;
-  cursor: pointer;
+  &:hover, &.active {
+    background-color: rgb(15, 8, 80);
+    color: rgb(142, 227, 255);
+    cursor: pointer;
+  }
+}
+#source-link {
+  color: inherit;
 }
